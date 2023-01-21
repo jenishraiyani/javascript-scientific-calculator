@@ -15,10 +15,10 @@
 
 <body>
   <div class="container mt-3">
-    <div class="calculator-body mx-auto my-auto w-100 p-2 d-grid border border-dark">
+    <div class="calculator-body mx-auto my-auto w-100 p-2 d-grid border border-dark ">
       <div class="display text-end fw-bold p-2">
-        <div class="user-input">120<span class="symbol">x</span>100</div>
-        <div class="output form-control-lg">0</div>
+        <div class="user-input" id="input-screen"></div>
+        <div class="output form-control-lg" id="output-screen" >0</div>
       </div>
       <div class="row row-cols-5 g-1">
         <div class="col">
@@ -66,111 +66,113 @@
           <button type="button" class="btn w-100 btn-cultured">2<sup>nd</sup></button>
         </div>
         <div class="col">
-          <button type="button" class="btn w-100 btn-cultured">&#960;</button>
+          <button type="button" class="btn w-100 btn-cultured" onclick="getConstant(this.id)" id="PI">&#960;</button>
         </div>
         <div class="col">
-          <button type="button" class="btn w-100 btn-cultured">e</button>
+          <button type="button" class="btn w-100 btn-cultured" onclick="getConstant(this.id)" id="Euler">e</button>
         </div>
         <div class="col">
-          <button type="button" class="btn w-100 btn-cultured">C</button>
+          <button type="button" class="btn w-100 btn-cultured" onclick="allClear()">C</button>
         </div>
         <div class="col">
-          <button type="button" class="btn w-100 btn-cultured">
+          <button type="button" class="btn w-100 btn-cultured" onclick="clearEntry()">
             <img src="https://img.icons8.com/material-outlined/24/null/clear-symbol--v1.png" />
           </button>
         </div>
-        <div class="col">
-          <button type="button" class="btn w-100 btn-light">x<sup>2</sup></button>
+        <div class="col" >
+          <button type="button" class="btn w-100 btn-light" onclick="getPower(this.id)" id="findSquare">x<sup>2</sup></button>
         </div>
         <div class="col">
-          <button type="button" class="btn w-100 btn-light">1/x</button>
+          <button type="button" class="btn w-100 btn-light" onclick="getDerivative()">1/x</button>
         </div>
         <div class="col">
-          <button type="button" class="btn w-100 btn-light">|x|</button>
+          <button type="button" class="btn w-100 btn-light" onclick="getAbsoluteValue()">|x|</button>
         </div>
         <div class="col">
-          <button type="button" class="btn w-100 btn-light">exp</button>
+          <button type="button" class="btn w-100 btn-light" onclick="getExponent()">exp</button>
         </div>
         <div class="col">
-          <button type="button" class="btn w-100 btn-light">mod</button>
+          <button type="button" class="btn w-100 btn-light" onclick="getModulo()">mod</button>
         </div>
         <div class="col">
-          <button type="button" class="btn w-100 btn-light"> 2<i class="fa-solid fa-square-root-variable"></i></button>
+          <button type="button" class="btn w-100 btn-light" onclick="getPower()" id="findXRoot"> 2<i class="fa-solid fa-square-root-variable"></i></button>
         </div>
         <div class="col">
-          <button type="button" class="btn w-100 btn-light">(</button>
+          <button type="button" class="btn w-100 btn-light" onclick="displayEntry('(')">(</button>
         </div>
         <div class="col">
-          <button type="button" class="btn w-100 btn-light">)</button>
+          <button type="button" class="btn w-100 btn-light" onclick="displayEntry(')')">)</button>
         </div>
         <div class="col">
-          <button type="button" class="btn w-100 btn-light"><em>n</em>!</button>
+          <button type="button" class="btn w-100 btn-light" onclick="getFactorial()"><em>n</em>!</button>
         </div>
         <div class="col">
-          <button type="button" class="btn w-100 btn-light"> <i class="fa-solid fa-divide"></i> </button>
+          <button type="button" class="btn w-100 btn-light" onclick="displayEntry('/')"> <i class="fa-solid fa-divide"></i> </button>
         </div>
         <div class="col">
-          <button type="button" class="btn w-100 btn-light">x<sup>y</sup></button>
+          <button type="button" class="btn w-100 btn-light" onclick="getPower()">x<sup>y</sup></button>
         </div>
         <div class="col">
-          <button type="button" class="btn w-100 bg-white">7</button>
+          <button type="button" class="btn w-100 bg-white" onclick="displayEntry('7')">7</button>
         </div>
         <div class="col">
-          <button type="button" class="btn w-100 bg-white">8</button>
+          <button type="button" class="btn w-100 bg-white" onclick="displayEntry('8')">8</button>
         </div>
         <div class="col">
-          <button type="button" class="btn w-100 bg-white">9</button>
+          <button type="button" class="btn w-100 bg-white" onclick="displayEntry('9')">9</button>
         </div>
         <div class="col">
-          <button type="button" class="btn w-100 btn-light"><i class="fa fa-times" aria-hidden="true"></i></button>
+          <button type="button" class="btn w-100 btn-light"  onclick="displayEntry('*')"><i class="fa fa-times" aria-hidden="true"></i></button>
         </div>
         <div class="col">
-          <button type="button" class="btn w-100 btn-light"> 10<sup>x</sup></button>
+          <button type="button" class="btn w-100 btn-light" onclick="getPower(this.id)" id="findTenPower">10<sup>x</sup></button>
         </div>
         <div class="col">
-          <button type="button" class="btn w-100 bg-white">4</button>
+          <button type="button" class="btn w-100 bg-white" onclick="displayEntry('4')">4</button>
         </div>
         <div class="col">
-          <button type="button" class="btn w-100 bg-white">5</button>
+          <button type="button" class="btn w-100 bg-white" onclick="displayEntry('5')">5</button>
         </div>
         <div class="col">
-          <button type="button" class="btn w-100 bg-white">6</button>
+          <button type="button" class="btn w-100 bg-white" onclick="displayEntry('6')">6</button>
         </div>
         <div class="col">
-          <button type="button" class="btn w-100 btn-light"><i class="fa fa-minus"></i></button>
+          <button type="button" class="btn w-100 btn-light"  onclick="displayEntry('-')"><i class="fa fa-minus"></i></button>
         </div>
         <div class="col">
-          <button type="button" class="btn w-100 btn-light">log</button>
+          <button type="button" class="btn w-100 btn-light" onclick="getLog(this.id)" id="logTenBase">log</button>
         </div>
         <div class="col">
-          <button type="button" class="btn w-100 bg-white">1</button>
+          <button type="button" class="btn w-100 bg-white" onclick="displayEntry('1')">1</button>
         </div>
         <div class="col">
-          <button type="button" class="btn w-100 bg-white">2</button>
+          <button type="button" class="btn w-100 bg-white" onclick="displayEntry('2')">2</button>
         </div>
         <div class="col">
-          <button type="button" class="btn w-100 bg-white">3</button>
+          <button type="button" class="btn w-100 bg-white" onclick="displayEntry('3')">3</button>
         </div>
         <div class="col">
-          <button type="button" class="btn w-100 btn-light"><i class="fa fa-plus"></i></button>
+          <button type="button" class="btn w-100 btn-light" onclick="displayEntry('+')"><i class="fa fa-plus"></i></button>
         </div>
         <div class="col">
-          <button type="button" class="btn w-100 btn-light">ln</button>
+          <button type="button" class="btn w-100 btn-light" onclick="getLog(this.id)" id="naturalLogarithm">ln</button>
         </div>
         <div class="col">
-          <button type="button" class="btn w-100 bg-white">+/-</button>
+          <button type="button" class="btn w-100 bg-white" onclick="setPlusMinus()">+/-</button>
         </div>
         <div class="col">
-          <button type="button" class="btn w-100 bg-white">0</button>
+          <button type="button" class="btn w-100 bg-white" onclick="displayEntry('0')">0</button>
         </div>
         <div class="col">
-          <button type="button" class="btn w-100 bg-white">.</button>
+          <button type="button" class="btn w-100 bg-white" onclick="displayEntry('.')">.</button>
         </div>
         <div class="col">
-          <button type="button" class="btn w-100 btn-info"><i class="fa-solid fa-equals"></i></button>
+          <button type="button" class="btn w-100 btn-info" onclick="Calculator()"><i class="fa-solid fa-equals"></i></button>
         </div>
       </div>
     </div>
   </div>
+
+  <script src="js/app.js"></script>
 </body>
 </html>
