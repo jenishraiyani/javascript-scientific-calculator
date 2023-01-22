@@ -1,101 +1,181 @@
-let inputData = document.getElementById("input-screen");
-let outputData = document.getElementById("output-screen");
+let childScreen = document.getElementById("child-screen");
+let mainScreen = document.getElementById("output-screen");
+let errorMessage = document.getElementById('error-message');
+let memoryItems = [];
+checkMemory();
 
-function displayEntry(num) {
-    outputData.innerHTML += num;
+function displayEntry(value) {
+    if (ValidateInput(value)) {
+        mainScreen.innerHTML += value;
+    }
 }
 
 function Calculator() {
     try {
-        inputData.innerHTML = outputData.innerHTML;
-        let count = eval(outputData.innerHTML);
-        outputData.innerHTML = count;
+        childScreen.innerHTML = mainScreen.innerHTML;
+        let count = eval(mainScreen.innerHTML);
+        mainScreen.innerHTML = count;
     } catch (err) {
-        alert("Invalid");
+        errorMessage.innerHTML = "<div class='alert alert-danger w-25' role='alert'>Invalid Input!!</div>";
+        window.setTimeout(function () {
+            errorMessage.innerHTML = "";
+        }, 3000);
     }
 }
 
 function allClear() {
-    outputData.innerHTML = "";
-    inputData.innerHTML = "";
+    mainScreen.innerHTML = "";
+    childScreen.innerHTML = "";
 }
 
 function clearEntry() {
-    if (outputData.innerHTML == "") {
-        inputData.innerHTML = inputData.innerHTML.slice(0, -1);
+    if (mainScreen.innerHTML == "") {
+        childScreen.innerHTML = childScreen.innerHTML.slice(0, -1);
     } else {
-        outputData.innerHTML = outputData.innerHTML.slice(0, -1);
+        mainScreen.innerHTML = mainScreen.innerHTML.slice(0, -1);
     }
 }
 
 function getConstant(clicked_id) {
     if (clicked_id == "PI") {
-        outputData.innerHTML += Math.PI;
+        mainScreen.innerHTML += Math.PI;
     }
     else {
-        outputData.innerHTML += Math.E;
+        mainScreen.innerHTML += Math.E;
     }
 }
 
 function getDerivative() {
-    outputData.innerHTML = eval(1 / outputData.innerHTML);
+    mainScreen.innerHTML = eval(1 / mainScreen.innerHTML);
 }
 function getAbsoluteValue() {
-    outputData.innerHTML = Math.abs(outputData.innerHTML);
+    mainScreen.innerHTML = Math.abs(mainScreen.innerHTML);
 }
 
 function getModulo() {
-    validateString("%");
-}
-function validateString(Symbol) {
-    let entry = outputData.innerHTML;
-    var lastEntry = entry.charAt(entry.length - 1);
-    if (lastEntry != Symbol) {
-        outputData.innerHTML += Symbol;
+    if (ValidateInput('%')) {
+        mainScreen.innerHTML += '%';
     }
 }
 
 function getExponent() {
-    outputData.innerHTML = Math.exp(outputData.innerHTML);
+    mainScreen.innerHTML = Math.exp(mainScreen.innerHTML);
 }
 
 function getFactorial() {
-    let factorialNumber = outputData.innerHTML;
+    let factorialNumber = mainScreen.innerHTML;
     if (factorialNumber < 0) {
-        alert("Invalid Input");
+        errorMessage.innerHTML = "<div class='alert alert-danger w-25' role='alert'>Invalid Input!!</div>";
+        window.setTimeout(function () {
+            errorMessage.innerHTML = "";
+        }, 3000);
     } else if (factorialNumber == 0) {
-        outputData.innerHTML = "1";
+        mainScreen.innerHTML = "1";
     } else {
         for (var i = factorialNumber - 1; i >= 1; i--) {
             factorialNumber *= i;
         }
-        outputData.innerHTML = factorialNumber;
+        mainScreen.innerHTML = factorialNumber;
     }
 }
 
 function getPower(clicked_id) {
     if (clicked_id == "findSquare") {
-        outputData.innerHTML = Math.pow(outputData.innerHTML, 2);
+        mainScreen.innerHTML = Math.pow(mainScreen.innerHTML, 2);
     } else if (clicked_id == "findXRoot") {
-        outputData.innerHTML = Math.pow(outputData.innerHTML, 1 / 2);
+        mainScreen.innerHTML = Math.pow(mainScreen.innerHTML, 1 / 2);
     } else if (clicked_id == "findTenPower") {
-        outputData.innerHTML = Math.pow(10, outputData.innerHTML);
+        mainScreen.innerHTML = Math.pow(10, mainScreen.innerHTML);
     }
 }
 
 function getLog(clicked_id) {
     if (clicked_id == "logTenBase") {
-        outputData.innerHTML += Math.log10(outputData.innerHTML);
+        mainScreen.innerHTML += Math.log10(mainScreen.innerHTML);
     } else if (clicked_id == "naturalLogarithm") {
-        outputData.innerHTML += Math.log(outputData.innerHTML);
+        mainScreen.innerHTML += Math.log(mainScreen.innerHTML);
     }
 }
 
 function setPlusMinus() {
-    let firstOperator = outputData.innerHTML.charAt(0);
+    let firstOperator = mainScreen.innerHTML.charAt(0);
     if (firstOperator == "-") {
         getAbsoluteValue();
     } else {
-        outputData.innerHTML = outputData.innerHTML.slice(0, 0) + "-" + outputData.innerHTML.slice(0);
+        mainScreen.innerHTML = mainScreen.innerHTML.slice(0, 0) + "-" + mainScreen.innerHTML.slice(0);
     }
 }
+
+function ValidateInput(value) {
+    let lastEntry = mainScreen.innerHTML.slice(-1);
+    let operators = ["%", "+", "-", "*", "/", "."];
+    if (operators.includes(value)) {
+        if (operators.includes(lastEntry)) {
+            return false;
+        }
+        else {
+            return true;
+        }
+    }
+    return true;
+}
+
+function memoryStore() {
+    const storedMemoryData = JSON.parse(localStorage.getItem('calcmemory'));
+    if (mainScreen.innerHTML != "") {
+        if (storedMemoryData != null) {
+            storedMemoryData.push(mainScreen.innerHTML);
+            localStorage.setItem("calcmemory", JSON.stringify(storedMemoryData));
+        }
+        else {
+            memoryItems.push(mainScreen.innerHTML)
+            localStorage.setItem("calcmemory", JSON.stringify(memoryItems));
+        }
+    }
+
+}
+
+function memoryPlusSubtract(clicked_id) {
+    const storedMemoryData = JSON.parse(localStorage.getItem('calcmemory'));
+    if (mainScreen.innerHTML != "") {
+        if (storedMemoryData != null) {
+            let lastItems = storedMemoryData.length - 1;
+            if (clicked_id == "memory-plus") {
+                let replacement = eval(storedMemoryData[lastItems] + "+" + mainScreen.innerHTML);
+                storedMemoryData[lastItems] = replacement;
+                localStorage.setItem("calcmemory", JSON.stringify(storedMemoryData));
+            } else if (clicked_id == "memory-subtract") {
+                let replacement = eval(storedMemoryData[lastItems] + "-" + mainScreen.innerHTML);
+                storedMemoryData[lastItems] = replacement;
+                localStorage.setItem("calcmemory", JSON.stringify(storedMemoryData));
+            }
+            else {
+                localStorage.removeItem('calcmemory');
+                checkMemory();
+            }
+        }
+        else {
+            return false;
+        }
+    }
+}
+
+function memoryRecall() {
+    let retrievedMemoryData = localStorage.getItem("calcmemory");
+    let memoryData = JSON.parse(retrievedMemoryData);
+    mainScreen.innerHTML = memoryData[memoryData.length - 1]
+}
+
+function checkMemory() {
+    const storedMemoryData = JSON.parse(localStorage.getItem('calcmemory'));
+    let memoryClear = document.getElementById("memory-clear");
+    let memoryRecall = document.getElementById("memory-recall");
+    if (storedMemoryData == null) {
+        memoryClear.className += " disabled";
+        memoryRecall.className += " disabled";
+    } else {
+        memoryClear.setAttribute("class", "btn")
+        memoryClear.setAttribute("class", "btn")
+    }
+};
+

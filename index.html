@@ -14,10 +14,14 @@
 </head>
 
 <body>
-  <div class="container mt-3">
+  <div class="message d-flex justify-content-end mt-3 me-2" id="error-message">
+       
+  </div>
+  <div class="container">
     <div class="calculator-body mx-auto my-auto w-100 p-2 d-grid border border-dark ">
+      
       <div class="display text-end fw-bold p-2">
-        <div class="user-input" id="input-screen"></div>
+        <div class="user-input" id="child-screen"></div>
         <div class="output form-control-lg" id="output-screen" >0</div>
       </div>
       <div class="row row-cols-5 g-1">
@@ -28,19 +32,19 @@
           <button type="button" class="btn fw-bold">F-E</button>
         </div>
         <div class="col">
-          <button type="button" class="btn">MC</button>
+          <button type="button" class="btn" id="memory-clear" onclick="memoryPlusSubtract()">MC</button>
         </div>
         <div class="col">
-          <button type="button" class="btn">MR</button>
+          <button type="button" class="btn" id="memory-recall" onclick="memoryRecall()">MR</button>
         </div>
         <div class="col">
-          <button type="button" class="btn fw-bold">M+</button>
+          <button type="button" class="btn fw-bold" id="memory-plus" onclick="memoryPlusSubtract(this.id)">M+</button>
         </div>
         <div class="col">
-          <button type="button" class="btn fw-bold">M-</button>
+          <button type="button" class="btn fw-bold"  id="memory-subtract" onclick="memoryPlusSubtract(this.id)">M-</button>
         </div>
         <div class="col">
-          <button type="button" class="btn fw-bold">MS</button>
+          <button type="button" class="btn fw-bold" onclick="memoryStore()">MS</button>
         </div>
         <div class="col-6">
           <button id="btnGroupDrop1" type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
