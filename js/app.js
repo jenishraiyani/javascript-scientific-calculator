@@ -80,20 +80,27 @@ function getFactorial() {
 }
 
 function getPower(clicked_id) {
-    if (clicked_id == "findSquare") {
-        mainScreen.innerHTML = Math.pow(mainScreen.innerHTML, 2);
-    } else if (clicked_id == "findXRoot") {
-        mainScreen.innerHTML = Math.pow(mainScreen.innerHTML, 1 / 2);
-    } else if (clicked_id == "findTenPower") {
-        mainScreen.innerHTML = Math.pow(10, mainScreen.innerHTML);
+    switch (clicked_id) {
+        case "findSquare":
+            mainScreen.innerHTML = Math.pow(mainScreen.innerHTML, 2);
+            break;
+        case "findXRoot":
+            mainScreen.innerHTML = Math.pow(mainScreen.innerHTML, 1 / 2);
+            break;
+        case "findTenPower":
+            mainScreen.innerHTML = Math.pow(10, mainScreen.innerHTML);
+            break;
     }
 }
 
 function getLog(clicked_id) {
-    if (clicked_id == "logTenBase") {
-        mainScreen.innerHTML += Math.log10(mainScreen.innerHTML);
-    } else if (clicked_id == "naturalLogarithm") {
-        mainScreen.innerHTML += Math.log(mainScreen.innerHTML);
+    switch (clicked_id) {
+        case "logTenBase":
+            mainScreen.innerHTML = Math.log10(mainScreen.innerHTML);
+            break;
+        case "naturalLogarithm":
+            mainScreen.innerHTML = Math.log(mainScreen.innerHTML);
+            break;
     }
 }
 
@@ -140,18 +147,21 @@ function memoryPlusSubtract(clicked_id) {
     if (mainScreen.innerHTML != "") {
         if (storedMemoryData != null) {
             let lastItems = storedMemoryData.length - 1;
-            if (clicked_id == "memory-plus") {
-                let replacement = eval(storedMemoryData[lastItems] + "+" + mainScreen.innerHTML);
-                storedMemoryData[lastItems] = replacement;
-                localStorage.setItem("calcmemory", JSON.stringify(storedMemoryData));
-            } else if (clicked_id == "memory-subtract") {
-                let replacement = eval(storedMemoryData[lastItems] + "-" + mainScreen.innerHTML);
-                storedMemoryData[lastItems] = replacement;
-                localStorage.setItem("calcmemory", JSON.stringify(storedMemoryData));
-            }
-            else {
-                localStorage.removeItem('calcmemory');
-                checkMemory();
+            switch (clicked_id) {
+                case "memory-plus":
+                    let replacePlus = eval(storedMemoryData[lastItems] + "+" + mainScreen.innerHTML);
+                    storedMemoryData[lastItems] = replacePlus;
+                    localStorage.setItem("calcmemory", JSON.stringify(storedMemoryData));
+                    break;
+                case "memory-subtract":
+                    let replaceSubtract = eval(storedMemoryData[lastItems] + "-" + mainScreen.innerHTML);
+                    storedMemoryData[lastItems] = replaceSubtract;
+                    localStorage.setItem("calcmemory", JSON.stringify(storedMemoryData));
+                    break;
+                default:
+                    localStorage.removeItem('calcmemory');
+                    checkMemory();
+                    break;
             }
         }
         else {
