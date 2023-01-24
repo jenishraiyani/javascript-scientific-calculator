@@ -11,10 +11,7 @@ body {
 .calculator-body {
     max-width: 405px;
 }
-.display{
-    height: 80px;
-    overflow: hidden;
-}
+
 .output {
     font-size: 2rem;
 }
