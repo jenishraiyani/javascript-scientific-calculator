@@ -1,14 +1,20 @@
 body {
     background-color: #f1f1f2;
 }
+
 .btn {
     height: 50px;
     font-size: 1em;
     font-weight: 700;
 }
-.calculator-body{
+
+.calculator-body {
     max-width: 405px;
-}   
-.output{
-    font-size: 3rem;
+}
+.display{
+    height: 80px;
+    overflow: hidden;
+}
+.output {
+    font-size: 2rem;
 }
